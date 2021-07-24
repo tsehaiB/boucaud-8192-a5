@@ -1,13 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="ucf.assignments.DatabaseContainerController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane fx:id="mainWindow" prefHeight="400.0" prefWidth="603.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ucf.assignments.DatabaseContainerController">
+   <children>
+      <Accordion layoutX="391.0" prefHeight="392.0" prefWidth="214.0">
+        <panes>
+            <TitledPane animated="false" prefHeight="316.0" prefWidth="200.0" text="Add New Item">
+               <content>
+                  <AnchorPane prefHeight="301.0" prefWidth="257.0">
+                     <children>
+                        <TextField fx:id="valueNum" layoutX="136.0" layoutY="49.0" prefHeight="26.0" prefWidth="104.0" promptText="Enter Item Value" />
+                        <Button layoutX="64.0" layoutY="14.0" mnemonicParsing="false" onAction="#addButtonClicked" prefHeight="26.0" prefWidth="126.0" text="Add New Item" />
+                        <TextField fx:id="serialNum" layoutX="14.0" layoutY="49.0" prefHeight="26.0" prefWidth="121.0" promptText="Enter Serial Number" />
+                        <TextArea fx:id="name" layoutX="14.0" layoutY="86.0" prefHeight="178.0" prefWidth="226.0" promptText="Enter Name of Item (Character Limit 256)" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </TitledPane>
+          <TitledPane animated="false" text="View Item">
+               <content>
+                  <AnchorPane prefHeight="275.0" prefWidth="228.0">
+                     <children>
+                        <Label layoutX="14.0" layoutY="14.0" text="Item: (Serial Number)" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0" />
+                        <Label layoutX="473.0" layoutY="15.0" text="\$ (Price in USD)" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
+                        <Label alignment="TOP_LEFT" layoutX="21.6" layoutY="76.6" prefHeight="147.0" prefWidth="223.0" text="Name of item (2-256 characters)" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="45.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </TitledPane>
+          <TitledPane animated="false" text="Search For Item">
+               <content>
+                  <AnchorPane prefHeight="255.0" prefWidth="422.0">
+                     <children>
+                        <RadioButton layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Serial Number" />
+                        <RadioButton layoutX="116.0" layoutY="14.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="58.0" text="Value" />
+                        <RadioButton layoutX="176.0" layoutY="14.0" mnemonicParsing="false" text="Name" />
+                        <TextArea layoutX="18.0" layoutY="53.0" prefHeight="200.0" prefWidth="219.0" promptText="Enter Your Search Here" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </TitledPane>
+            <TitledPane animated="false" text="Import and Export">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </TitledPane>
+        </panes>
+      </Accordion>
+            <TableView fx:id="tableview" prefHeight="400.0" prefWidth="392.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="261.0" AnchorPane.topAnchor="0.0">
+              <columns>
+                <TableColumn fx:id="serialColumn" prefWidth="100.0" text="Serial Number" />
+                <TableColumn fx:id="valueColumn" minWidth="8.0" prefWidth="87.20000457763672" text="Value" />
+                  <TableColumn fx:id="nameColumn" prefWidth="201.5999755859375" text="Name" />
+              </columns>
+            </TableView>
+   </children>
 </AnchorPane>
