@@ -9,6 +9,7 @@ public class searchItems {
     searchItems(){
 
     }
+
     searchItems(itemData currentItem, String searchEntry, int searchOptions){
         //if searchEntry is empty or null, return with the original list
         if(currentItem == null)

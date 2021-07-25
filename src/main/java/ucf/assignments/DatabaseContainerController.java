@@ -8,6 +8,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -55,9 +56,10 @@ public class DatabaseContainerController {
     public void addButtonClicked(ActionEvent actionEvent) {
         //construct item adder with current text fields as parameters, as well as the observable list for validating reasons
         itemAdder = new addItem(serialNum.getText(), valueNum.getText(), name.getText(), tableview.getItems());
-        myItems.add(itemAdder.appendItem());
-        tableview.getItems().setAll(myItems);
-        //unfilteredData.setAll(tableview.getItems());
+        if(itemAdder.appendItem() != null) {
+            myItems.add(itemAdder.appendItem());
+            tableview.getItems().setAll(myItems);
+        }//unfilteredData.setAll(tableview.getItems());
     }
     public void search(){
         //Check currently selected toggle
@@ -67,14 +69,22 @@ public class DatabaseContainerController {
         searchText.textProperty().addListener((observable, oldValue, newValue) -> {
             //set predicate equal to the output of a function that contains all of the different conditions
             searchResults.setPredicate(itemData -> {
+                //check to see if the user wants to search in Serial Numbers, Values, or Names
                 int currentToggle = searchOptions.getToggles().indexOf(searchOptions.getSelectedToggle());
+                //if case sensitive checkbox is selected, run case sensitive item searcher
                 if(caseSensitivityCheckBox.isSelected())
                     itemSearcher = new searchItems(itemData, searchText.getText(), currentToggle, true);
                 else
+                //if not run case insensitive searcher
                     itemSearcher = new searchItems(itemData, searchText.getText(), currentToggle);
+                //either way, return the result to the searchResults list, and continue the loop
                 return itemSearcher.getResult();
             });
-            tableview.setItems(searchResults);
+            //make it so that this new filtered list is still sortable
+            SortedList<itemData> sortedList = new SortedList<>(searchResults);
+            sortedList.comparatorProperty().bind(tableview.comparatorProperty());
+            //set table view items to equal sorted list items
+            tableview.setItems(sortedList);
         });
     }
 }
