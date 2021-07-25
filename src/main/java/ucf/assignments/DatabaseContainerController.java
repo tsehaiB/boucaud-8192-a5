@@ -31,6 +31,7 @@ public class DatabaseContainerController {
     @FXML private TextArea name;
     @FXML private TextArea searchText;
     @FXML private ToggleGroup searchOptions;
+    @FXML private CheckBox caseSensitivityCheckBox;
     @FXML private AnchorPane mainWindow;
     //Initialize objects and lists
     addItem itemAdder;
@@ -67,7 +68,10 @@ public class DatabaseContainerController {
             //set predicate equal to the output of a function that contains all of the different conditions
             searchResults.setPredicate(itemData -> {
                 int currentToggle = searchOptions.getToggles().indexOf(searchOptions.getSelectedToggle());
-                itemSearcher = new searchItems(itemData, searchText.getText(), currentToggle);
+                if(caseSensitivityCheckBox.isSelected())
+                    itemSearcher = new searchItems(itemData, searchText.getText(), currentToggle, true);
+                else
+                    itemSearcher = new searchItems(itemData, searchText.getText(), currentToggle);
                 return itemSearcher.getResult();
             });
             tableview.setItems(searchResults);
