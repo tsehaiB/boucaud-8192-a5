@@ -9,7 +9,7 @@ public class itemData {
         setName("");
         setValue("");
     }
-    itemData(String serialNumber, String name, String value){
+    itemData(String serialNumber, String value, String name){
         setSerialNumber(serialNumber);
         setName(name);
         setValue(value);
