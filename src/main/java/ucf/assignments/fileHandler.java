@@ -1,15 +1,24 @@
+/*
+ *  UCF COP3330 Summer 2021 Assignment 5 Solution
+ *  Copyright 2021 Tsehai Boucaud
+ */
 package ucf.assignments;
 
 import com.jayway.jsonpath.JsonPath;
+import javafx.beans.binding.ObjectExpression;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import net.minidev.json.parser.JSONParser;
+import net.minidev.json.parser.ParseException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class fileHandler {
@@ -116,6 +125,7 @@ public class fileHandler {
             //return json object
             return jsonItems;
         }
+    @SuppressWarnings("unchecked")
     public String writeJsonToFile(JSONObject jsonItems, String name) throws IOException {
             //create a filewriter with the correct directory + the filename + format '.json'
             FileWriter writer = new FileWriter((saveFile + "\\" + name + ".json"));
@@ -130,4 +140,4 @@ public class fileHandler {
             //return location
             return ret.getPath();
         }
-    }
+}
