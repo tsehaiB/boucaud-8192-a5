@@ -41,6 +41,7 @@ public class DatabaseContainerController {
     @FXML private CheckBox caseSensitivityCheckBox;
     @FXML private AnchorPane mainWindow;
     @FXML private TextField fileNameTextField;
+    @FXML private Label errorDisplay;
     //Initialize objects and lists
     addItem itemAdder;
     searchItems itemSearcher;
@@ -67,6 +68,9 @@ public class DatabaseContainerController {
             myItems.add(itemAdder.appendItem());
             tableview.getItems().setAll(myItems);
         }//unfilteredData.setAll(tableview.getItems());
+        else{
+            errorDisplay.setText(itemAdder.getError());
+        }
     }
     public void search(){
         //Check currently selected toggle
@@ -103,5 +107,12 @@ public class DatabaseContainerController {
         handler = new fileHandler(saveOptions.getToggles().indexOf(saveOptions.getSelectedToggle()), saveFile, fileNameTextField.getText() , myItems);
         directoryTextField.setText(saveFile.toString());
     }
+
+    public void onRemoveClicked(ActionEvent actionEvent) {
+        itemData removeItem = tableview.getSelectionModel().getSelectedItem();
+        myItems.remove(removeItem);
+        tableview.getItems().setAll(myItems);
+    }
+
 }
 

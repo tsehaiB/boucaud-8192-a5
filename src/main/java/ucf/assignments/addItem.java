@@ -7,6 +7,7 @@ import java.util.List;
 
 public class addItem {
     private itemData newItem;
+    private String error = "";
     addItem(){
         //empty constructor
         this.newItem = new itemData();
@@ -16,16 +17,18 @@ public class addItem {
         if(validateItem(sn, val, name, list)){
             this.newItem = new itemData(sn, val, name);
             }
-        else{
-            System.out.println("Item Invalid. Name should be between 2-256 Characters\n" +
-                                             "Serial Number should be 10 characters long and alphanumeric\n" +
-                                             "Value should be a number that could represent currency");}
     }
     public boolean validateItem(String sn, String val, String name, ObservableList<itemData> list){
         //check if SN is valid
         //check if Name is valid
         //Check if the Value is numeric, and can be turned into a double
         //return true if and only if all parameters have met constraints
+        if(!validateSN(sn, list))
+            error += "Serial must be unique, 10 characters\n";
+        if(!validateValue(val))
+            error += "Value must be a number\n";
+        if(!validateName(name))
+            error += "Name should be between 2-256 Characters\n";
         return validateSN(sn, list) && validateName(name) && validateValue(val);
     }
     private boolean validateSN(String sn, ObservableList<itemData> list){
@@ -56,6 +59,9 @@ public class addItem {
             return false;
         }
         return true;
+    }
+    public String getError(){
+        return this.error;
     }
     public itemData appendItem(){
         return this.newItem;
