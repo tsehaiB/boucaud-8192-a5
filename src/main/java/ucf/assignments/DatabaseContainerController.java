@@ -17,8 +17,12 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ResourceBundle;
 
 public class DatabaseContainerController {
@@ -32,12 +36,15 @@ public class DatabaseContainerController {
     @FXML private TextArea name;
     @FXML private TextArea searchText;
     @FXML private ToggleGroup searchOptions;
+    @FXML private TextField directoryTextField;
+    @FXML private ToggleGroup saveOptions;
     @FXML private CheckBox caseSensitivityCheckBox;
     @FXML private AnchorPane mainWindow;
+    @FXML private TextField fileNameTextField;
     //Initialize objects and lists
     addItem itemAdder;
     searchItems itemSearcher;
-    //ObservableList<itemData> unfilteredData = FXCollections.observableArrayList();
+    fileHandler handler;
     ObservableList<itemData> myItems = FXCollections.observableArrayList();
     public DatabaseContainerController() {
 
@@ -86,6 +93,15 @@ public class DatabaseContainerController {
             //set table view items to equal sorted list items
             tableview.setItems(sortedList);
         });
+    }
+
+    public void browseButtonClicked(ActionEvent actionEvent) {
+        final DirectoryChooser directory = new DirectoryChooser();
+
+        Stage primaryWindow = (Stage) mainWindow.getScene().getWindow();
+        File saveFile = directory.showDialog(primaryWindow);
+        handler = new fileHandler(saveOptions.getToggles().indexOf(saveOptions.getSelectedToggle()), saveFile, fileNameTextField.getText() , myItems);
+        directoryTextField.setText(saveFile.toString());
     }
 }
 

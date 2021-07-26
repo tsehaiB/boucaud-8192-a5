@@ -1,27 +1,93 @@
-@startuml
+ @startuml
 'https://plantuml.com/class-diagram
-
-abstract class AbstractList
-abstract AbstractCollection
-interface List
-interface Collection
-
-List <|-- AbstractList
-Collection <|-- AbstractCollection
-
-Collection <|- List
-AbstractCollection <|- AbstractList
-AbstractList <|-- ArrayList
-
-class ArrayList {
-Object[] elementData
-size()
+class databaseApp{
+    main()
+    start()
+    - createIcon()
 }
+class DatabaseContainerController {
+    - tableview : TableView<itemData>
+    - serialColumn : TableColumn<itemData, SimpleStringProperty>
+    - valueColumn : TableColumn<itemData, SimpleStringProperty>
+    - nameColumn : TableColumn<itemData, SimpleStringProperty>
+    - valueNum : TextField
+    - serialColumn : TextField
+    - name : TextArea
+    - searchOptions : ToggleGroup
+    - saveOptions : ToggleGroup
+    - directoryTextField : TextField
+    - caseSensitivityCheckBox : CheckBox
+    - mainWindow : (AnchorPane)
+    - fileNameTextField : TextField
+    - itemAdder : addItem
+    - searchItems : itemSearcher
+    - handler : fileHandler
+    - myItems : ObservableList<itemData>
 
-enum TimeUnit {
-DAYS
-HOURS
-MINUTES
+    + DatabaseContainerController()
+    + initialize()
+    + addButtonClicked(Action Event actionEvent)
+    + search()
+    + browseButtonClicked(Action Event actionEvent)
 }
+class itemData{
+    - serialNumber : SimpleStringProperty
+    - value : SimpleStringProperty
+    - name : SimpleStringProperty
+
+    + getSerialNumber(String)
+    + getValue(String)
+    + getName(String)
+    + setSerialNumber()
+    + setValue()
+    + setName()
+}
+class addItem{
+    - newItem  : itemData
+
+    + addItem()
+    + addItem(String, String, String, ObservableList<itemData>)
+    + validateItem(String, String, String, ObservableList<itemData>);
+    - validateSN(String, ObservableList<itemData>)
+    - validateName(String)
+    - validateValue(String)
+    + appendItem()
+
+}
+class searchItems {
+
+        - boolean : searchResult
+
+        + searchItems(itemData, String, int)
+        + searchItems()
+        + searchItems(itemData, String, int, boolean)
+
+        - setResult(int, itemData, String)
+        - setResult(int, itemData, String, boolean)
+        + getResult()
+}
+class fileHandler {
+
+        - saveType : int
+        - saveFile : File
+        - allItems : ObservableList<itemData>
+
+        + fileHandler()
+        + fileHandler(int, File, String, itemData)
+        + setSaveType(int)
+        + setSaveFile(File)
+        + setAllItems(ObservableList<itemData>)
+        + parseAsTSV()
+        + writeTSVToFile(ArrayList<String>, String)
+        + parseAsJson()
+        + writeJsonToFile(JSONObject jsonItems, String name)
+}
+databaseApp *-> DatabaseContainerController
+DatabaseContainerController *->itemData
+DatabaseContainerController -- fileHandler
+DatabaseContainerController -- searchItems
+itemData *--> fileHandler
+itemData *--> searchItems
+itemData *--> addItem
 
 @enduml
